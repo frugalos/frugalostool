@@ -1,0 +1,11 @@
+[package]
+name = "frugalostool"
+version = "0.1.0"
+authors = ["The FrugalOS Developers"]
+description = "Command line utilities for frugalos"
+homepage = "https://github.com/frugalos/frugalostool"
+repository = "https://github.com/frugalos/frugalostool"
+categories = ["command-line-utilities"]
+license = "MIT"
+
+[dependencies]
