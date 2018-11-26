@@ -9,3 +9,18 @@ categories = ["command-line-utilities"]
 license = "MIT"
 
 [dependencies]
+cannyls = "0.9"
+cannyls_rpc = "0.1"
+structopt = "0.2"
+fibers = "0.1"
+fibers_rpc = "0.2"
+futures = "0.1"
+libfrugalos = "0.2"
+slog = "2"
+sloggers = "0.3"
+serde = "1"
+serde_derive = "1"
+trackable = "0.2"
+
+[patch.crates-io]
+libfrugalos = { path = "../libfrugalos" }
