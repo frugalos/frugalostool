@@ -1,6 +1,4 @@
 //! command definitions
-use error::Error;
-use error::ErrorKind;
 use fibers::{Executor, Spawn, ThreadPoolExecutor};
 use fibers_rpc::client::ClientServiceBuilder as RpcServiceBuilder;
 use futures::Future;
@@ -10,11 +8,14 @@ use libfrugalos::entity::device::DeviceId;
 use libfrugalos::entity::object::ObjectId;
 use slog::Logger;
 use sloggers::types::Severity;
+use structopt::StructOpt;
+
 use std::collections::BTreeSet;
 use std::net::SocketAddr;
 use std::path::PathBuf;
-use structopt::StructOpt;
-use trackable::error::ErrorKindExt;
+use std::str::FromStr;
+
+use error::Error;
 use Result;
 
 pub mod object;
@@ -111,17 +112,5 @@ pub fn parse_object_ids(raw: &str, delimiter: &str) -> BTreeSet<ObjectId> {
 
 /// Parses `Severity` from a string.
 fn parse_log_level(raw: &str) -> Result<Severity> {
-    Ok(match raw {
-        "trace" => Severity::Trace,
-        "debug" => Severity::Debug,
-        "info" => Severity::Info,
-        "warn" => Severity::Warning,
-        "critical" => Severity::Critical,
-        "error" => Severity::Error,
-        _ => {
-            return Err(ErrorKind::InvalidInput
-                .cause(format!("Unrecognized: {}", raw))
-                .into())
-        }
-    })
+    Severity::from_str(raw).map_err(|e| track!(Error::from(e)))
 }
