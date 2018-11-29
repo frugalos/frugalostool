@@ -3,6 +3,7 @@
 extern crate cannyls;
 extern crate cannyls_rpc;
 extern crate fibers;
+extern crate fibers_global;
 extern crate fibers_rpc;
 extern crate futures;
 extern crate libfrugalos;

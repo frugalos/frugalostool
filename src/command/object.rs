@@ -1,7 +1,8 @@
 //! This crate defines commands for `Object`.
 use command::OneshotCommandContext;
 use error::Error;
-use fibers::{Executor, Spawn};
+use fibers::Spawn;
+use fibers_global;
 use futures::Future;
 use libfrugalos::entity::bucket::BucketId;
 use libfrugalos::entity::device::DeviceId;
@@ -28,16 +29,12 @@ impl DeleteObjectsByIds {
         device_id: DeviceId,
         object_ids: BTreeSet<ObjectId>,
     ) -> Result<()> {
-        let fiber = self.context.executor.spawn_monitor(
+        let fiber = fibers_global::handle().spawn_monitor(
             self.context
                 .frugalos_client
                 .delete_from_device_by_object_ids(bucket_id, device_id, object_ids)
                 .map_err(|e| track!(e)),
         );
-        self.context
-            .executor
-            .run_fiber(fiber)
-            .unwrap()
-            .map_err(|e| track!(Error::from(e)))
+        fibers_global::execute(fiber).map_err(|e| track!(Error::from(e)))
     }
 }

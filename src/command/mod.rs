@@ -1,5 +1,5 @@
 //! command definitions
-use fibers::{Executor, Spawn, ThreadPoolExecutor};
+use fibers_global;
 use fibers_rpc::client::ClientServiceBuilder as RpcServiceBuilder;
 use futures::Future;
 use libfrugalos::client::frugalos::Client;
@@ -23,25 +23,22 @@ pub mod object;
 #[allow(missing_docs)]
 pub struct OneshotCommandContext {
     pub logger: Logger,
-    pub executor: ThreadPoolExecutor,
     pub frugalos_client: Client,
 }
 
 impl OneshotCommandContext {
     #[allow(missing_docs)]
     pub fn new(logger: Logger, rpc_addr: SocketAddr) -> Result<Self> {
-        let executor = track!(ThreadPoolExecutor::with_thread_count(1).map_err(Error::from))?;
         let rpc_service = RpcServiceBuilder::new()
             .logger(logger.clone())
-            .finish(executor.handle());
+            .finish(fibers_global::handle());
         let rpc_service_handle = rpc_service.handle();
         let frugalos_client = Client::new(rpc_addr, rpc_service_handle);
 
-        executor.spawn(rpc_service.map_err(|e| panic!("{}", e)));
+        fibers_global::spawn(rpc_service.map_err(|e| panic!("{}", e)));
 
         Ok(OneshotCommandContext {
             logger,
-            executor,
             frugalos_client,
         })
     }
