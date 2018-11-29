@@ -106,13 +106,7 @@ pub enum SubCommandOptions {
 
 /// Parses `ObjectVersion`s from a string.
 pub fn parse_object_ids(raw: &str, delimiter: &str) -> BTreeSet<ObjectId> {
-    let mut result = BTreeSet::new();
-
-    for id in raw.split(delimiter) {
-        result.insert(id.to_owned());
-    }
-
-    result
+    raw.split(delimiter).map(|id| id.to_owned()).collect()
 }
 
 /// Parses `Severity` from a string.
