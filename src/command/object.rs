@@ -1,13 +1,15 @@
 //! This crate defines commands for `Object`.
-use command::OneshotCommandContext;
-use error::Error;
 use fibers::Spawn;
 use fibers_global;
 use futures::Future;
 use libfrugalos::entity::bucket::BucketId;
 use libfrugalos::entity::device::DeviceId;
 use libfrugalos::entity::object::ObjectId;
+
 use std::collections::BTreeSet;
+
+use command::OneshotCommandContext;
+use error::Error;
 use Result;
 
 #[allow(missing_docs)]

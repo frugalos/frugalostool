@@ -2,9 +2,10 @@
 use fibers::sync::oneshot::MonitorError;
 use libfrugalos;
 use sloggers;
-use std::io;
 use trackable::error::TrackableError;
 use trackable::error::{ErrorKind as TrackableErrorKind, ErrorKindExt};
+
+use std::io;
 
 /// A struct indicating the kind of error that has occurred in this crate.
 #[derive(Debug, Clone, TrackableError, Serialize)]
