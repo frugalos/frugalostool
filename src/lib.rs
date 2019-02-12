@@ -12,7 +12,6 @@ extern crate serde;
 extern crate serde_derive;
 extern crate slog;
 extern crate sloggers;
-#[macro_use]
 extern crate structopt;
 #[macro_use]
 extern crate trackable;
