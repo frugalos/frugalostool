@@ -16,9 +16,12 @@ fibers = "0.1"
 fibers_global = "0.1"
 fibers_rpc = "0.2"
 futures = "0.1"
-libfrugalos = "0.2.1"
+libfrugalos = { git = "https://github.com/yuezato/libfrugalos", branch = "alternative_head" }
 slog = "2"
 sloggers = "0.3"
 serde = "1"
 serde_derive = "1"
 trackable = "0.2"
+
+[patch.crates-io]
+libfrugalos = { git = "https://github.com/yuezato/libfrugalos", branch = "alternative_head" }
