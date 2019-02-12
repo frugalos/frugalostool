@@ -20,9 +20,13 @@ use Result;
 
 pub mod object;
 
-#[allow(missing_docs)]
+/// Context for a one shot command that uses RPC.
+/// It consists of a logger and a frugalos rpc client.
 pub struct OneshotCommandContext {
+    /// logger to be logged by a oneshot command.
     pub logger: Logger,
+
+    /// frugalos rpc client.
     pub frugalos_client: Client,
 }
 
@@ -99,6 +103,30 @@ pub enum SubCommandOptions {
         /// insufficient because an `ObjectId` may contain an arbitrary character.
         #[structopt(long = "object-ids", default_value = "")]
         object_ids: String,
+    },
+
+    #[structopt(name = "head")]
+    Head {
+        #[structopt(long = "rpc-addr", default_value = "127.0.0.1:14278")]
+        rpc_addr: SocketAddr,
+
+        #[structopt(long = "bucket")]
+        bucket: BucketId,
+
+        #[structopt(long = "object-id")]
+        object_id: String,
+    },
+
+    #[structopt(name = "mds-head")]
+    MdsHead {
+        #[structopt(long = "rpc-addr", default_value = "127.0.0.1:14278")]
+        rpc_addr: SocketAddr,
+
+        #[structopt(long = "bucket")]
+        bucket: BucketId,
+
+        #[structopt(long = "object-id")]
+        object_id: String,
     },
 }
 

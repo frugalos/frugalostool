@@ -6,12 +6,12 @@ extern crate structopt;
 extern crate trackable;
 
 use frugalostool::command;
-use frugalostool::command::object::DeleteObjectsByIds;
+use frugalostool::command::object::*;
 use frugalostool::Result;
 use sloggers::Build;
 use structopt::StructOpt;
 
-#[cfg_attr(feature = "cargo-clippy", allow(cyclomatic_complexity))]
+#[allow(clippy::cyclomatic_complexity)]
 fn main() -> Result<()> {
     let options = command::ApplicationOptions::from_args();
     let logger_builder = if let Some(filepath) = options.global.log_file {
@@ -40,6 +40,28 @@ fn main() -> Result<()> {
             let object_ids = command::parse_object_ids(&object_ids, &delimiter);
             let context = command::OneshotCommandContext::new(logger.clone(), rpc_addr)?;
             track!(DeleteObjectsByIds::new(context).run(bucket, device, object_ids))?;
+        }
+        command::SubCommandOptions::Head {
+            rpc_addr,
+            bucket,
+            object_id,
+        } => {
+            let context = command::OneshotCommandContext::new(logger.clone(), rpc_addr)?;
+
+            let result = track!(Head::new(context).run(bucket, object_id))?;
+
+            println!("result = {:?}", result);
+        }
+        command::SubCommandOptions::MdsHead {
+            rpc_addr,
+            bucket,
+            object_id,
+        } => {
+            let context = command::OneshotCommandContext::new(logger.clone(), rpc_addr)?;
+
+            let result = track!(MdsHead::new(context).run(bucket, object_id))?;
+
+            println!("result = {:?}", result);
         }
     }
 
