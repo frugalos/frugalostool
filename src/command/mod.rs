@@ -18,6 +18,7 @@ use std::str::FromStr;
 use error::Error;
 use Result;
 
+pub mod cluster;
 pub mod object;
 
 #[allow(missing_docs)]
@@ -79,6 +80,20 @@ pub struct GlobalOptions {
 #[derive(Debug, StructOpt)]
 #[allow(missing_docs)]
 pub enum SubCommandOptions {
+    #[structopt(name = "create-docker-compose")]
+    CreateDockerCompose {
+        /// specifies how many nodes you need
+        #[structopt(long = "cluster-size", default_value = "3")]
+        cluster_size: u8,
+
+        /// specifies the start index of network address used in a cluster
+        #[structopt(long = "cluster-addr-start", default_value = "21")]
+        cluster_addr_start: u8,
+
+        /// specifies the start index of nodes.
+        #[structopt(long = "node-index-start", default_value = "0")]
+        node_index_start: u8,
+    },
     #[structopt(name = "delete-objects-by-ids")]
     DeleteObjectsByIds {
         #[structopt(long = "rpc-addr", default_value = "127.0.0.1:14278")]
