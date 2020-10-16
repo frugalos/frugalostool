@@ -1,5 +1,4 @@
 //! command definitions
-use fibers_global;
 use fibers_rpc::client::ClientServiceBuilder as RpcServiceBuilder;
 use futures::Future;
 use libfrugalos::client::frugalos::Client;
@@ -15,8 +14,8 @@ use std::net::SocketAddr;
 use std::path::PathBuf;
 use std::str::FromStr;
 
-use error::Error;
-use Result;
+use crate::error::Error;
+use crate::Result;
 
 pub mod object;
 

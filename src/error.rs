@@ -1,7 +1,5 @@
 //! Error types
 use fibers::sync::oneshot::MonitorError;
-use libfrugalos;
-use sloggers;
 use trackable::error::TrackableError;
 use trackable::error::{ErrorKind as TrackableErrorKind, ErrorKindExt};
 
