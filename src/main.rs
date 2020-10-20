@@ -11,7 +11,7 @@ use frugalostool::Result;
 use sloggers::Build;
 use structopt::StructOpt;
 
-#[allow(clippy::cyclomatic_complexity)]
+#[allow(clippy::cognitive_complexity)]
 fn main() -> Result<()> {
     let options = command::ApplicationOptions::from_args();
     let logger_builder = if let Some(filepath) = options.global.log_file {
