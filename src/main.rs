@@ -6,6 +6,7 @@ extern crate structopt;
 extern crate trackable;
 
 use frugalostool::command;
+use frugalostool::command::cluster::CreateDockerCompose;
 use frugalostool::command::object::DeleteObjectsByIds;
 use frugalostool::Result;
 use sloggers::Build;
@@ -29,6 +30,17 @@ fn main() -> Result<()> {
 
     // SubCommands
     match options.command {
+        command::SubCommandOptions::CreateDockerCompose {
+            cluster_size,
+            cluster_addr_start,
+            node_index_start,
+        } => {
+            track!(CreateDockerCompose::new().run(
+                cluster_size,
+                cluster_addr_start,
+                node_index_start
+            ))?;
+        }
         command::SubCommandOptions::DeleteObjectsByIds {
             rpc_addr,
             bucket,
